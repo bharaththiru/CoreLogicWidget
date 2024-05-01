@@ -1,0 +1,25 @@
+.search-bar {
+  display: flex;
+  margin: 10px auto;
+  border-radius: 5px;
+  /* No background for a minimal look */
+}
+
+.search-input {
+  padding: 8px 10px;
+  border: 1px solid #ddd; /* Clear border around input */
+  border-radius: 5px 0 0 5px; /* Match border radius of search bar */
+  font-size: 16px;
+  /* Reduce margin for a tighter look */
+  margin: 0 -5px 0 5px;
+  outline: none; /* Remove default outline on focus */
+}
+
+.search-button {
+  padding: 8px 10px;
+  border: 1px solid #ddd; /* Separate border for button */
+  border-radius: 0 5px 5px 0; /* Match border radius of search bar */
+  color: white; /* White text for better contrast */
+  background-color: #4CAF50; /* Green button color */
+  cursor: pointer; /* Indicate clickable button */
+}

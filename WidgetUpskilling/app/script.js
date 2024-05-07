@@ -4,7 +4,7 @@ var propertyId;
 // Search Bar Functionality
 document.addEventListener('DOMContentLoaded', () => {
 
-  document.querySelector('.search-button').addEventListener('click', function(event) {
+  document.querySelector('.search-button').addEventListener('click', function (event) {
     event.preventDefault();
     const userInput = document.getElementById('search_bar').value;
     fetch(`http://localhost:3000/api/location?address=${userInput}`)
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       suggestionItem.addEventListener('click', () => {
         console.log('User Selected: ', suggestion.suggestion);
 
-        if(suggestion.suggestionType === 'address') { //If suggestion type is address, extract the property id (only address types have propertyId)
+        if (suggestion.suggestionType === 'address') { //If suggestion type is address, extract the property id (only address types have propertyId)
           propertyId = suggestion.propertyId;
           console.log(propertyId);
 
@@ -54,4 +54,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  //API authentication
+  document.getElementById('generate_token').addEventListener('click', () => {
+    fetch('http://localhost:3000/api/generate-token', {
+      method: 'POST'
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Token generated successfully');
+        } else {
+          console.error('Failed to generate token');
+        }
+      })
+      .catch(error => {
+        console.error('Error generating token:', error);
+      });
+  });
+
 });
+
+

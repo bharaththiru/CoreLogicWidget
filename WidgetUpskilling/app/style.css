@@ -31,3 +31,19 @@
   padding: 10px 20px;
   border-radius: 5px;
 }
+
+.suggestion-results { /*removing existing style*/
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+
+.suggestion-results li{
+  padding: 10px;
+  border-bottom: 1px skyblue;
+  cursor: pointer;
+}
+
+.suggestion-results li:hover {
+  background-color: #eee;
+}

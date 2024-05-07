@@ -2,7 +2,7 @@ var addressSuggestions;
 var propertyId;
 
 // Search Bar Functionality
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('.search-button').addEventListener('click', function(event) {
     event.preventDefault();
@@ -31,13 +31,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
       suggestionItem.addEventListener('click', () => {
         console.log('User Selected: ', suggestion.suggestion);
 
-        if(suggestion.suggestionType === 'address') {
+        if(suggestion.suggestionType === 'address') { //If suggestion type is address, extract the property id (only address types have propertyId)
           propertyId = suggestion.propertyId;
           console.log(propertyId);
+
+          fetchCoreDetails(propertyId);
         }
       });
       suggestionList.appendChild(suggestionItem);
     });
+  }
+
+  async function fetchCoreDetails(propertyId) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/core-details?propertyId=${propertyId}`);
+      const data = await response.json();
+      console.log('Core Details:', data);
+      // Handle core details data
+
+    } catch (error) {
+      console.error('Error fetching core details:', error);
+    }
   }
 
 });

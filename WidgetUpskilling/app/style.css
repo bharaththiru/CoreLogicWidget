@@ -1,27 +1,35 @@
+/* CSS for search bar */
+.search-container {
+  text-align: center;
+  margin-top: 30vh; /* Move the search bar down by 20% of the viewport height */
+}
+
+.search-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .search-bar {
   display: flex;
-  margin: 10px auto;
-  border-radius: 5px;
-  /* No background for a minimal look */
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .search-input {
   padding: 8px 10px;
-  border: 1px solid #ddd; /* Clear border around input */
-  border-radius: 5px 0 0 5px; /* Match border radius of search bar */
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
   font-size: 16px;
-  /* Reduce margin for a tighter look */
-  margin: 0 -5px 0 5px;
-  outline: none; /* Remove default outline on focus */
 }
 
 .search-button {
-  padding: 8px 10px;
-  border: 1px solid #ddd; /* Separate border for button */
-  border-radius: 0 5px 5px 0; /* Match border radius of search bar */
-  color: white; /* White text for better contrast */
-  background-color: #4CAF50; /* Green button color */
-  cursor: pointer; /* Indicate clickable button */
+  padding: 8px 20px;
+  border: 1px solid #ddd;
+  border-radius: 0 5px 5px 0;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
 }
 
 .generate-token-button {
@@ -30,20 +38,35 @@
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
-.suggestion-results { /*removing existing style*/
+/* CSS for suggestions */
+.search_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Add margin to separate the search bar and suggestions */
+}
+
+.suggestion-results {
   list-style: none;
   padding: 0;
-  margin: 0
+  margin: 0;
 }
 
-.suggestion-results li{
+.suggestion-results li {
   padding: 10px;
-  border-bottom: 1px skyblue;
+  border-bottom: 1px solid skyblue;
   cursor: pointer;
 }
 
 .suggestion-results li:hover {
   background-color: #eee;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }

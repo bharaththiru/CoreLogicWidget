@@ -5,6 +5,7 @@
 }
 
 .search-title {
+  font-family: "Arial", sans-serif;
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -43,6 +44,7 @@
 
 /* CSS for suggestions */
 .search_container {
+  font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +53,9 @@
 
 .suggestion-results {
   list-style: none;
+  background-color: #f9f9f9; /* Background color for the property details container */
+  border-radius: 8px; /* Add border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
   padding: 0;
   margin: 0;
 }
@@ -63,6 +68,41 @@
 
 .suggestion-results li:hover {
   background-color: #eee;
+}
+
+.property-details-container {
+  font-family: "Arial", sans-serif;
+  background-color: #f9f9f9; /* Background color for the property details container */
+  border-radius: 8px; /* Add border radius for rounded corners */
+  padding: 20px; /* Add padding to the property details container */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+}
+
+.property-details-container h2 {
+  color: #333; /* Title color */
+  font-size: 24px; /* Title font size */
+  margin-bottom: 10px; /* Bottom margin for title */
+}
+
+.property-details-container p {
+  color: #666; /* Text color */
+  font-size: 16px; /* Text font size */
+  margin-bottom: 8px; /* Bottom margin for paragraphs */
+}
+
+.add-to-crm-button {
+  padding: 8px 16px; /* Adjust padding as needed */
+  background-color: #46b2dd; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  font-size: 14px; /* Adjust font size as needed */
+  font-weight: bold; 
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.add-to-crm-button:hover {
+  background-color: #3586a7; /* Darken button background color on hover */
 }
 
 .error-message {

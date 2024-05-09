@@ -106,17 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function displayPropertyDetails(propertyDetails, suggestionName) {
     const propertyDetailsContainer = document.getElementById('search_results');
     propertyDetailsContainer.innerHTML = `
-      <div>
-        <h2>Property Details</h2>
-        <p>Property Address: ${suggestionName}</p>
-        <p>Property Type: ${propertyDetails.propertyType}</p>
-        <p>Property Subtype: ${propertyDetails.propertySubType}</p>
-        <p>Beds: ${propertyDetails.beds}</p>
-        <p>Baths: ${propertyDetails.baths}</p>
-        <p>Car Spaces: ${propertyDetails.carSpaces}</p>
-        <p>Land Area: ${propertyDetails.landArea}</p>
+    <div class="property-details-container">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Property Details</h2> <!-- Title -->
+        <button class="add-to-crm-button">Add to CRM</button> <!-- Button -->
       </div>
-    `;
+      <p>Property Address: ${suggestionName}</p>
+      <p>Property Type: ${propertyDetails.propertyType}</p>
+      <p>Property Subtype: ${propertyDetails.propertySubType}</p>
+      <p>Beds: ${propertyDetails.beds}</p>
+      <p>Baths: ${propertyDetails.baths}</p>
+      <p>Car Spaces: ${propertyDetails.carSpaces}</p>
+      <p>Land Area: ${propertyDetails.landArea}</p>
+    </div>
+  `;
     // Clear any existing error message
     clearErrorMessage();
   }

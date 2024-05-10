@@ -154,6 +154,29 @@ app.post('/api/refresh-zoho-token', async (req, res) => {
 });
 
 
+//Create New Record in Zoho Module
+
+app.post('/api/create-record/:module_api_name', async (req, res) => {
+  const moduleApiName = 'Properties';
+  const zohoCreateRecordUrl = `https://www.zohoapis.com/crm/v6/${moduleApiName}`;
+
+  try {
+    const response = await axios.post(zohoCreateRecordUrl, req.body, {
+      headers: {
+        'Authorization': `Zoho-oauthtoken ${zohoAccessToken}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    });
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error creating record:', error.response.data);
+    res.status(500).json({ error: 'Failed to create record' });
+  }
+});
+
+
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');

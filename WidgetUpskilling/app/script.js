@@ -1,7 +1,8 @@
 let addressSuggestions;
 let propertyId;
 let zohoAccessToken = '';
-
+const moduleApiName = 'Properties';
+let recordData;
 
 // Search Bar Functionality
 document.addEventListener('DOMContentLoaded', () => {
@@ -68,6 +69,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       console.log('Core Details:', data);
       displayPropertyDetails(data, addressSuggestions.find(suggestion => suggestion.propertyId === propertyId).suggestion);
+
+      recordData = {
+        "data": [
+          {
+            "Name": addressSuggestions.suggestion,
+            "Property_Type": data.propertyType,
+            "Property_Subtype": data.propertySubType,
+            "Beds": data.beds,
+            "Baths": data.baths,
+            "Car_Spaces": data.carSpaces,
+            "Land_Area": data.landArea,
+          }
+        ]
+      }
+
+
     } catch (error) {
       console.error('Error fetching core details:', error);
       displayErrorMessage(error.message);
@@ -162,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 //------------------------------ZOHO---------------------------------------------------------
-  
+
   async function generateZohoToken() {
     try {
       const response = await fetch('http://localhost:3000/api/generate-zoho-token', {
@@ -210,6 +227,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
+
+  //Create Zoho Record in Module
+  async function addToCRM() {
+    try {
+      const response = await fetch(`http://localhost:3000/api/create-record/${moduleApiName}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recordData)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create record');
+      }
+  
+      const responseData = await response.json();
+      console.log('Record created successfully:', responseData);
+      // Update UI or perform other actions based on the response
+    } catch (error) {
+      console.error('Error creating record:', error);
+      // Handle the error - display a message to the user or retry the operation
+    }
+  }
+  
+  //Need to add click listener to Add To Crm Buton ro call the above function
   
 
 });

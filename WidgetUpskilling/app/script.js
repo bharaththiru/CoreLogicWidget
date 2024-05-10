@@ -1,5 +1,6 @@
-var addressSuggestions;
-var propertyId;
+let addressSuggestions;
+let propertyId;
+let zohoAccessToken = '';
 
 
 // Search Bar Functionality
@@ -103,25 +104,112 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Display property details
+
+
+  // function displayPropertyDetails(propertyDetails, suggestionName) {
+  //   const propertyDetailsContainer = document.getElementById('search_results');
+  //   propertyDetailsContainer.innerHTML = `
+  //   <div class="property-details-container">
+  //     <div style="display: flex; justify-content: space-between; align-items: center;">
+  //       <h2>Property Details</h2> <!-- Title -->
+  //       <button class="add-to-crm-button">Add to CRM</button> <!-- Button -->
+  //     </div>
+  //     <p>Property Address: ${suggestionName}</p>
+  //     <p>Property Type: ${propertyDetails.propertyType}</p>
+  //     <p>Property Subtype: ${propertyDetails.propertySubType}</p>
+  //     <p>Beds: ${propertyDetails.beds}</p>
+  //     <p>Baths: ${propertyDetails.baths}</p>
+  //     <p>Car Spaces: ${propertyDetails.carSpaces}</p>
+  //     <div style="display: flex; justify-content: space-between; align-items: center;">
+  //       <p>Land Area: ${propertyDetails.landArea}</p>
+  //       <button id="zoho_token_button class="generate-zoho-token">Generate Zoho Token</button> <!-- Button -->
+  //     </div>
+  //   </div>
+  // `;
+  //   // Clear any existing error message
+  //   clearErrorMessage();
+  // }
+
+    // Inside displayPropertyDetails function
   function displayPropertyDetails(propertyDetails, suggestionName) {
     const propertyDetailsContainer = document.getElementById('search_results');
-    propertyDetailsContainer.innerHTML = `
-    <div class="property-details-container">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>Property Details</h2> <!-- Title -->
-        <button class="add-to-crm-button">Add to CRM</button> <!-- Button -->
-      </div>
-      <p>Property Address: ${suggestionName}</p>
-      <p>Property Type: ${propertyDetails.propertyType}</p>
-      <p>Property Subtype: ${propertyDetails.propertySubType}</p>
-      <p>Beds: ${propertyDetails.beds}</p>
-      <p>Baths: ${propertyDetails.baths}</p>
-      <p>Car Spaces: ${propertyDetails.carSpaces}</p>
-      <p>Land Area: ${propertyDetails.landArea}</p>
-    </div>
-  `;
+    const propertyDetailsTemplate = document.getElementById('propertyDetailsTemplate');
+    const propertyDetailsClone = propertyDetailsTemplate.content.cloneNode(true);
+
+    propertyDetailsClone.querySelector('#propertyAddress').textContent += suggestionName;
+    propertyDetailsClone.querySelector('#propertyType').textContent += propertyDetails.propertyType;
+    propertyDetailsClone.querySelector('#propertySubType').textContent += propertyDetails.propertySubType;
+    propertyDetailsClone.querySelector('#beds').textContent += propertyDetails.beds;
+    propertyDetailsClone.querySelector('#baths').textContent += propertyDetails.baths;
+    propertyDetailsClone.querySelector('#carSpaces').textContent += propertyDetails.carSpaces;
+    propertyDetailsClone.querySelector('#landArea').textContent += propertyDetails.landArea;
+
+    console.log('Cloned Template:', propertyDetailsClone);
+
+    propertyDetailsContainer.innerHTML = ''; // Clear previous content
+    propertyDetailsContainer.appendChild(propertyDetailsClone);
+
+    // Attach event listener to the generated button
+    const zohoTokenButton = document.getElementById('zoho_token_button');
+    zohoTokenButton.addEventListener('click', () => {
+      generateZohoToken();
+      console.log(zohoAccessToken);
+    });
+
     // Clear any existing error message
     clearErrorMessage();
   }
+
+  
+//------------------------------ZOHO---------------------------------------------------------
+  
+  async function generateZohoToken() {
+    try {
+      const response = await fetch('http://localhost:3000/api/generate-zoho-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          grant_token: '1000.9b0a8fb1236eaa92e7b16b887cce5001.82c12cec96bfe97c0df145116f17f9ec' // Replace with the actual grant token
+        })
+      });
+      const data = await response.json();
+      zohoAccessToken = data.access_token;
+
+      console.log(response.data);
+
+      console.log('Zoho access token:', zohoAccessToken);
+
+      setTimeout(refreshZohoToken, 55 * 60 * 1000);
+
+    } catch (error) {
+      console.error('Error generating Zoho access token:', error);
+    }
+  }
+
+  //Refresh Zoho Token
+  async function refreshZohoToken() {
+    try {
+      const response = await fetch('http://localhost:3000/api/refresh-zoho-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      zohoAccessToken = data.access_token;
+
+      console.log(response.data);
+
+      console.log('Refreshed Zoho access token:', zohoAccessToken);
+
+      setTimeout(refreshZohoToken, 55 * 60 * 1000);
+    } catch (error) {
+      console.error('Error refreshing Zoho access token:', error);
+    }
+  }
+  
+  
 
 });

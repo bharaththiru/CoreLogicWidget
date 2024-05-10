@@ -11,7 +11,7 @@ const clientId = 'HMo1dGwAnWNQbyGejWswyNuE51A8izko';
 const clientSecret = 'zvTCkMvDcOa8bqQP';
 
 //Token Expiry: 12 hours
-var accessToken = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJDUlQiLCJNQVAiLCJQVFkiLCJTR1QiLCJTVFMiLCJUVEwiXSwicm9sZXMiOltdLCJpc3MiOiJodHRwczovL2FjY2Vzcy1hcGkuY29yZWxvZ2ljLmFzaWEiLCJlbnZfYWNjZXNzX3Jlc3RyaWN0Ijp0cnVlLCJleHAiOjE3MTUyNjUwMTEsImVudiI6InNhbmRib3giLCJnZW9fY29kZXMiOlsiQUNUIC0gRnVsbCBTdGF0ZSIsIk5TVyAtIE1ldHJvIiwiTlNXIC0gUmVnaW9uYWwiLCJOVCAtIEZ1bGwgU3RhdGUiLCJRTEQgLSBNZXRybyIsIlFMRCAtIFJlZ2lvbmFsIiwiU0EgLSBNZXRybyIsIlNBIC0gUmVnaW9uYWwiLCJUQVMgLSBGdWxsIFN0YXRlIiwiVklDIC0gKEFBKSBGdWxsIFN0YXRlIiwiVklDIC0gRnVsbCBTdGF0ZSIsIlZJQyAtIE1ldHJvIiwiVklDIC0gUmVnaW9uYWwiLCJXQSAtIE1ldHJvIiwiV0EgLSBSZWdpb25hbCIsIk5vcnRoIElzbGFuZCIsIlNvdXRoIElzbGFuZCJdLCJjbGllbnRfaWQiOiJITW8xZEd3QW5XTlFieUdlaldzd3lOdUU1MUE4aXprbyIsInNvdXJjZV9leGNsdXNpb24iOltdfQ.pnIQdqcEnckSR6Yv6eOb1zFxGHU6J6VHYpLM4OlrKoL9u_EnslGG7DesHjiYScEAjqgagYohSUd4Jr3YFt66AtXniWlFMD2fFLt5vdMlvra1c1eN5rR5g2KMKeEwp3WS4exHRIal9Evo3gfTDR5ClM8uWME8-Wxo6qbfDaUk7aA`;
+var accessToken = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJDUlQiLCJNQVAiLCJQVFkiLCJTR1QiLCJTVFMiLCJUVEwiXSwicm9sZXMiOltdLCJpc3MiOiJodHRwczovL2FjY2Vzcy1hcGkuY29yZWxvZ2ljLmFzaWEiLCJlbnZfYWNjZXNzX3Jlc3RyaWN0Ijp0cnVlLCJleHAiOjE3MTUzNDE4MTAsImVudiI6InNhbmRib3giLCJnZW9fY29kZXMiOlsiQUNUIC0gRnVsbCBTdGF0ZSIsIk5TVyAtIE1ldHJvIiwiTlNXIC0gUmVnaW9uYWwiLCJOVCAtIEZ1bGwgU3RhdGUiLCJRTEQgLSBNZXRybyIsIlFMRCAtIFJlZ2lvbmFsIiwiU0EgLSBNZXRybyIsIlNBIC0gUmVnaW9uYWwiLCJUQVMgLSBGdWxsIFN0YXRlIiwiVklDIC0gKEFBKSBGdWxsIFN0YXRlIiwiVklDIC0gRnVsbCBTdGF0ZSIsIlZJQyAtIE1ldHJvIiwiVklDIC0gUmVnaW9uYWwiLCJXQSAtIE1ldHJvIiwiV0EgLSBSZWdpb25hbCIsIk5vcnRoIElzbGFuZCIsIlNvdXRoIElzbGFuZCJdLCJjbGllbnRfaWQiOiJITW8xZEd3QW5XTlFieUdlaldzd3lOdUU1MUE4aXprbyIsInNvdXJjZV9leGNsdXNpb24iOltdfQ.LM8B2GllY9mjwMZ7G7pASLaXc3VbEkgbhpbAkWNxxGEUU_sQu3KHD1_3h4Ci9qU3Hys5H3tW25rfBJLRPWyEq3qHx2m1wTTxr_EguBvAkWyV0eh81o_qAfMlI7qhqUF1zn0UeJbbDofEd8YaVVefwLOYslZbrlwfCd9JMLGovm4`;
 const authURL = `https://api-sbox.corelogic.asia/access/oauth/token`;
 
 //Generating API Token
@@ -86,6 +86,72 @@ app.get('/api/core-details', (req, res) => {
 
 });
 
+//--------------------------------------ZOHO---------------------------------------------------------
+const zohoClientId = '1000.PFEU4I82AS879CBB6OJJ1L6Y7826UV';
+const zohoClientSecret = '8e6d939c355bd408c57ed63f4c2fcb90c86b0691c5';
+const zohoRedirectUri = 'https://127.0.0.1:5000/app/widget.html';
+const zohoAccountsUrl = 'https://accounts.zoho.com.au'; // Change this according to your Zoho domain
+const zohoGrantToken = '1000.9b0a8fb1236eaa92e7b16b887cce5001.82c12cec96bfe97c0df145116f17f9ec'
+
+let zohoAccessToken = ''; // Variable to store Zoho access token
+let zohoRefreshToken = '';
+
+// Endpoint Call to GENERATE Zoho access token
+app.post('/api/generate-zoho-token', async (req, res) => {
+  try {
+    // Make a POST request to generate the access token
+    const response = await axios.post(`${zohoAccountsUrl}/oauth/v2/token`, qs.stringify({
+      grant_type: 'authorization_code',
+      client_id: zohoClientId,
+      client_secret: zohoClientSecret,
+      redirect_uri: zohoRedirectUri,
+      code: zohoGrantToken // Assuming the grant token is sent in the request body
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      }
+    });
+
+    console.log(response.data);
+    // Extract the access token from the response
+    zohoAccessToken = response.data.access_token;
+    zohoRefreshToken = response.data.refresh_token;
+    console.log(zohoAccessToken);
+
+    // Send the response with the access token
+    res.status(200).json({ access_token: zohoAccessToken });
+  } catch (error) {
+    console.error('Error generating Zoho access token:', error);
+    res.status(500).json({ error: 'Failed to generate Zoho access token' });
+  }
+});
+
+
+//Endpoint / Call to REFRESH Zoho Access Token
+app.post('/api/refresh-zoho-token', async (req, res) => {
+  try {
+    // Make a POST request to refresh the access token
+    const response = await axios.post(`${zohoAccountsUrl}/oauth/v2/token?refresh_token=${zohoRefreshToken}&client_id=${zohoClientId}&client_secret=${zohoClientSecret}&grant_type=refresh_token`, null, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      }
+    });
+
+    console.log(response.data);
+
+    // Extract the new access token from the response
+    zohoAccessToken = response.data.access_token;
+    console.log('New Zoho access token:', zohoAccessToken);
+
+    // Send the response with the new access token
+    res.status(200).json({ access_token: zohoAccessToken });
+  } catch (error) {
+    console.error('Error refreshing Zoho access token:', error);
+    res.status(500).json({ error: 'Failed to refresh Zoho access token' });
+  }
+});
 
 
 

@@ -22,6 +22,26 @@
   <div id="search_container" class="search_container">
     <div id="search_results" class="suggestion-results"></div>
   </div>
+  <!-- Inside widget.html -->
+<template id="propertyDetailsTemplate">
+  <div class="property-details-container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Property Details</h2> <!-- Title -->
+      <button class="add-to-crm-button">Add to CRM</button> <!-- Button -->
+    </div>
+    <p id="propertyAddress">Property Address: </p>
+    <p id="propertyType">Property Type: </p>
+    <p id="propertySubType">Property Subtype: </p>
+    <p id="beds">Beds: </p>
+    <p id="baths">Baths: </p>
+    <p id="carSpaces">Car Spaces: </p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <p id="landArea">Land Area: </p>
+      <button id="zoho_token_button" class="generate-zoho-token">Generate Zoho Token</button> <!-- Button -->
+    </div>
+  </div>
+</template>
+
   <div id="error_message" class="error-message"></div> <!--Error message container-->
 </body>
 </html>

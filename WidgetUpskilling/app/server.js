@@ -11,7 +11,7 @@ const clientId = 'HMo1dGwAnWNQbyGejWswyNuE51A8izko';
 const clientSecret = 'zvTCkMvDcOa8bqQP';
 
 //Token Expiry: 12 hours
-var accessToken = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJDUlQiLCJNQVAiLCJQVFkiLCJTR1QiLCJTVFMiLCJUVEwiXSwicm9sZXMiOltdLCJpc3MiOiJodHRwczovL2FjY2Vzcy1hcGkuY29yZWxvZ2ljLmFzaWEiLCJlbnZfYWNjZXNzX3Jlc3RyaWN0Ijp0cnVlLCJleHAiOjE3MTUzNDE4MTAsImVudiI6InNhbmRib3giLCJnZW9fY29kZXMiOlsiQUNUIC0gRnVsbCBTdGF0ZSIsIk5TVyAtIE1ldHJvIiwiTlNXIC0gUmVnaW9uYWwiLCJOVCAtIEZ1bGwgU3RhdGUiLCJRTEQgLSBNZXRybyIsIlFMRCAtIFJlZ2lvbmFsIiwiU0EgLSBNZXRybyIsIlNBIC0gUmVnaW9uYWwiLCJUQVMgLSBGdWxsIFN0YXRlIiwiVklDIC0gKEFBKSBGdWxsIFN0YXRlIiwiVklDIC0gRnVsbCBTdGF0ZSIsIlZJQyAtIE1ldHJvIiwiVklDIC0gUmVnaW9uYWwiLCJXQSAtIE1ldHJvIiwiV0EgLSBSZWdpb25hbCIsIk5vcnRoIElzbGFuZCIsIlNvdXRoIElzbGFuZCJdLCJjbGllbnRfaWQiOiJITW8xZEd3QW5XTlFieUdlaldzd3lOdUU1MUE4aXprbyIsInNvdXJjZV9leGNsdXNpb24iOltdfQ.LM8B2GllY9mjwMZ7G7pASLaXc3VbEkgbhpbAkWNxxGEUU_sQu3KHD1_3h4Ci9qU3Hys5H3tW25rfBJLRPWyEq3qHx2m1wTTxr_EguBvAkWyV0eh81o_qAfMlI7qhqUF1zn0UeJbbDofEd8YaVVefwLOYslZbrlwfCd9JMLGovm4`;
+var accessToken = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJDUlQiLCJNQVAiLCJQVFkiLCJTR1QiLCJTVFMiLCJUVEwiXSwicm9sZXMiOltdLCJpc3MiOiJodHRwczovL2FjY2Vzcy1hcGkuY29yZWxvZ2ljLmFzaWEiLCJlbnZfYWNjZXNzX3Jlc3RyaWN0Ijp0cnVlLCJleHAiOjE3MTU1OTg4MzgsImVudiI6InNhbmRib3giLCJnZW9fY29kZXMiOlsiQUNUIC0gRnVsbCBTdGF0ZSIsIk5TVyAtIE1ldHJvIiwiTlNXIC0gUmVnaW9uYWwiLCJOVCAtIEZ1bGwgU3RhdGUiLCJRTEQgLSBNZXRybyIsIlFMRCAtIFJlZ2lvbmFsIiwiU0EgLSBNZXRybyIsIlNBIC0gUmVnaW9uYWwiLCJUQVMgLSBGdWxsIFN0YXRlIiwiVklDIC0gKEFBKSBGdWxsIFN0YXRlIiwiVklDIC0gRnVsbCBTdGF0ZSIsIlZJQyAtIE1ldHJvIiwiVklDIC0gUmVnaW9uYWwiLCJXQSAtIE1ldHJvIiwiV0EgLSBSZWdpb25hbCIsIk5vcnRoIElzbGFuZCIsIlNvdXRoIElzbGFuZCJdLCJjbGllbnRfaWQiOiJITW8xZEd3QW5XTlFieUdlaldzd3lOdUU1MUE4aXprbyIsInNvdXJjZV9leGNsdXNpb24iOltdfQ.mITxNFOAjJ-mcU6d38o7-azvc1XiCqIkpU4F7Q7P2r8iWDuP-ZhD54k67Ko8y1pcecPrXNii0HL8CBtWsLcRTaJXFRyGBcMXKAv8STptptSosz8qdTk6DBNbrP_v2yUVvZinNpaGPN2CGgpl664R1uTC05s4e1eYNtoM35wbRM0`;
 const authURL = `https://api-sbox.corelogic.asia/access/oauth/token`;
 
 //Generating API Token
@@ -91,7 +91,7 @@ const zohoClientId = '1000.PFEU4I82AS879CBB6OJJ1L6Y7826UV';
 const zohoClientSecret = '8e6d939c355bd408c57ed63f4c2fcb90c86b0691c5';
 const zohoRedirectUri = 'https://127.0.0.1:5000/app/widget.html';
 const zohoAccountsUrl = 'https://accounts.zoho.com.au'; // Change this according to your Zoho domain
-const zohoGrantToken = '1000.9b0a8fb1236eaa92e7b16b887cce5001.82c12cec96bfe97c0df145116f17f9ec'
+const zohoGrantToken = '1000.9d6b7263ef21189173c45b54f28a96ee.e7a93044c71863cfb0350be828a46d03'
 
 let zohoAccessToken = ''; // Variable to store Zoho access token
 let zohoRefreshToken = '';
@@ -117,7 +117,8 @@ app.post('/api/generate-zoho-token', async (req, res) => {
     // Extract the access token from the response
     zohoAccessToken = response.data.access_token;
     zohoRefreshToken = response.data.refresh_token;
-    console.log(zohoAccessToken);
+    console.log('Access Token: ',zohoAccessToken);
+    console.log('Refresh Token: ', zohoRefreshToken);
 
     // Send the response with the access token
     res.status(200).json({ access_token: zohoAccessToken });
@@ -140,6 +141,7 @@ app.post('/api/refresh-zoho-token', async (req, res) => {
     });
 
     console.log(response.data);
+    conaole.log(response);
 
     // Extract the new access token from the response
     zohoAccessToken = response.data.access_token;
@@ -156,8 +158,8 @@ app.post('/api/refresh-zoho-token', async (req, res) => {
 
 //Create New Record in Zoho Module
 
-app.post('/api/create-record/:module_api_name', async (req, res) => {
-  const moduleApiName = 'Properties';
+app.post('/api/create-record/:properties', async (req, res) => {
+  const moduleApiName = 'properties';
   const zohoCreateRecordUrl = `https://www.zohoapis.com/crm/v6/${moduleApiName}`;
 
   try {
@@ -169,10 +171,13 @@ app.post('/api/create-record/:module_api_name', async (req, res) => {
       }
     });
 
+    console.log('server token: ', zohoAccessToken);
+
     res.status(200).json(response.data);
   } catch (error) {
-    console.error('Error creating record:', error.response.data);
-    res.status(500).json({ error: 'Failed to create record' });
+    console.error('Error creating record (server):', error.response.data);
+    console.log('server token: ', zohoAccessToken);
+    res.status(500).json({ error: 'Failed to create record (Server)' });
   }
 });
 

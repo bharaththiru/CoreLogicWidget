@@ -1,9 +1,10 @@
 let addressSuggestions;
 let propertyId;
 let zohoAccessToken = '';
-const moduleApiName = 'Properties';
+let zohoRefreshToken = '';
+const moduleApiName = 'properties';
 let recordData;
-
+let zohoGrantToken = '1000.9d6b7263ef21189173c45b54f28a96ee.e7a93044c71863cfb0350be828a46d03';
 // Search Bar Functionality
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+
   async function fetchCoreDetails(propertyId) {
     try {
       const response = await fetch(`http://localhost:3000/api/core-details?propertyId=${propertyId}`);
@@ -68,12 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const data = await response.json();
       console.log('Core Details:', data);
-      displayPropertyDetails(data, addressSuggestions.find(suggestion => suggestion.propertyId === propertyId).suggestion);
-
+  
+      const suggestionName = addressSuggestions.find(suggestion => suggestion.propertyId === propertyId).suggestion;
+  
       recordData = {
         "data": [
           {
-            "Name": addressSuggestions.suggestion,
+            "Layout": {
+              "id": "72089000001126014"
+            },
+            "Name": suggestionName, // Assign suggestion name here
             "Property_Type": data.propertyType,
             "Property_Subtype": data.propertySubType,
             "Beds": data.beds,
@@ -82,14 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
             "Land_Area": data.landArea,
           }
         ]
-      }
-
-
+      };
+  
+      console.log('Record Data: ', recordData);
+      displayPropertyDetails(data, suggestionName);
+  
     } catch (error) {
       console.error('Error fetching core details:', error);
       displayErrorMessage(error.message);
     }
   }
+  
 
   //API authentication
   document.getElementById('generate_token').addEventListener('click', () => {
@@ -122,32 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Display property details
 
-
-  // function displayPropertyDetails(propertyDetails, suggestionName) {
-  //   const propertyDetailsContainer = document.getElementById('search_results');
-  //   propertyDetailsContainer.innerHTML = `
-  //   <div class="property-details-container">
-  //     <div style="display: flex; justify-content: space-between; align-items: center;">
-  //       <h2>Property Details</h2> <!-- Title -->
-  //       <button class="add-to-crm-button">Add to CRM</button> <!-- Button -->
-  //     </div>
-  //     <p>Property Address: ${suggestionName}</p>
-  //     <p>Property Type: ${propertyDetails.propertyType}</p>
-  //     <p>Property Subtype: ${propertyDetails.propertySubType}</p>
-  //     <p>Beds: ${propertyDetails.beds}</p>
-  //     <p>Baths: ${propertyDetails.baths}</p>
-  //     <p>Car Spaces: ${propertyDetails.carSpaces}</p>
-  //     <div style="display: flex; justify-content: space-between; align-items: center;">
-  //       <p>Land Area: ${propertyDetails.landArea}</p>
-  //       <button id="zoho_token_button class="generate-zoho-token">Generate Zoho Token</button> <!-- Button -->
-  //     </div>
-  //   </div>
-  // `;
-  //   // Clear any existing error message
-  //   clearErrorMessage();
-  // }
-
-    // Inside displayPropertyDetails function
+  // Inside displayPropertyDetails function
   function displayPropertyDetails(propertyDetails, suggestionName) {
     const propertyDetailsContainer = document.getElementById('search_results');
     const propertyDetailsTemplate = document.getElementById('propertyDetailsTemplate');
@@ -166,19 +150,34 @@ document.addEventListener('DOMContentLoaded', () => {
     propertyDetailsContainer.innerHTML = ''; // Clear previous content
     propertyDetailsContainer.appendChild(propertyDetailsClone);
 
+
+    //Add click listener to Add To Crm Buton.
+    const crmButton = document.getElementById('add_to_crm');
+    crmButton.addEventListener('click', () => {
+      addToCRM();
+      console.log('CRM Button clicked');
+    });
+
     // Attach event listener to the generated button
     const zohoTokenButton = document.getElementById('zoho_token_button');
     zohoTokenButton.addEventListener('click', () => {
       generateZohoToken();
-      console.log(zohoAccessToken);
+      console.log('Access Token: ', zohoAccessToken);
     });
+
+    //Refresh zoho token listener
+    const zohoRefreshTokenButton = document.getElementById('refresh_zoho_token');
+    zohoRefreshTokenButton.addEventListener('click', () => {
+      refreshZohoToken();
+      console.log('Refresh zoho token clicked');
+    })
 
     // Clear any existing error message
     clearErrorMessage();
   }
 
-  
-//------------------------------ZOHO---------------------------------------------------------
+
+  //------------------------------ZOHO---------------------------------------------------------
 
   async function generateZohoToken() {
     try {
@@ -188,17 +187,17 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          grant_token: '1000.9b0a8fb1236eaa92e7b16b887cce5001.82c12cec96bfe97c0df145116f17f9ec' // Replace with the actual grant token
+          grant_token: zohoGrantToken // Replace with the actual grant token
         })
       });
       const data = await response.json();
       zohoAccessToken = data.access_token;
+      zohoRefreshToken = data.refresh_token;
 
       console.log(response.data);
+      console.log(response);
 
       console.log('Zoho access token:', zohoAccessToken);
-
-      setTimeout(refreshZohoToken, 55 * 60 * 1000);
 
     } catch (error) {
       console.error('Error generating Zoho access token:', error);
@@ -218,15 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
       zohoAccessToken = data.access_token;
 
       console.log(response.data);
+      console.log(response);
 
       console.log('Refreshed Zoho access token:', zohoAccessToken);
 
-      setTimeout(refreshZohoToken, 55 * 60 * 1000);
     } catch (error) {
       console.error('Error refreshing Zoho access token:', error);
     }
   }
-  
+
 
   //Create Zoho Record in Module
   async function addToCRM() {
@@ -234,25 +233,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(`http://localhost:3000/api/create-record/${moduleApiName}`, {
         method: 'POST',
         headers: {
+          'Authorization': `Zoho-oauthtoken ${zohoAccessToken}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(recordData)
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create record');
       }
-  
+
+      console.log(response);
+      console.log(recordData);
+      console.log('Script token: ', zohoAccessToken);
+
       const responseData = await response.json();
       console.log('Record created successfully:', responseData);
       // Update UI or perform other actions based on the response
     } catch (error) {
-      console.error('Error creating record:', error);
+      console.error('Error creating record (Script):', error);
+      console.log('server token: ', zohoAccessToken);
       // Handle the error - display a message to the user or retry the operation
     }
   }
-  
-  //Need to add click listener to Add To Crm Buton ro call the above function
+
   
 
 });

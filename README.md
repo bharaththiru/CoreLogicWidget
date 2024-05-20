@@ -44,5 +44,5 @@ npm install -g zet
 
 ## Known Issues
 
-Currently, there is an error where the generated access token is returning a response saying “invalid token”, although the permissions were ALL permissions regarding modules. This issue is being investigated.
+Currently, there is an error where the generated zoho access token is returning a response saying “invalid token”, although the permissions were ALL permissions regarding modules. This issue is being investigated.
 
